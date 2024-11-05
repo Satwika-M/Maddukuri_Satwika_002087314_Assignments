@@ -24,5 +24,9 @@ public class Person {
         if(getPersonId().equals(id)) return true;
         return false;
     }
+        @Override
+        public String toString() {
+        return "Person ID: " + id ;
+}
     
 }

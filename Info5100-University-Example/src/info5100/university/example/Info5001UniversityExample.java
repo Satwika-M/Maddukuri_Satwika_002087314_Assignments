@@ -74,13 +74,20 @@ public class Info5001UniversityExample {
         }
 
         // Create faculty profiles and assign them to courses
+       
+        
         for (int i = 0; i < 5; i++) {
-            Person facultyPerson = new Person("F" + String.format("%03d", i + 1)); // Create faculty ID F001, F002, etc.
-            FacultyProfile facultyProfile = new FacultyProfile(facultyPerson);
-            facultyProfile.AssignAsTeacher(coreOffer); // Assign to the core course
-            facultyProfile.AssignAsTeacher(electiveOffer1); // Assign to elective 1
-            // You can expand this as necessary
-        }
+        Person facultyPerson = new Person("F" + String.format("%03d", i + 1));
+        FacultyProfile facultyProfile = new FacultyProfile(facultyPerson);
+
+        // Assign faculty to each course offer
+        if (i == 0) facultyProfile.AssignAsTeacher(coreOffer);
+        if (i == 1) facultyProfile.AssignAsTeacher(electiveOffer1);
+        if (i == 2) facultyProfile.AssignAsTeacher(electiveOffer2);
+        if (i == 3) facultyProfile.AssignAsTeacher(electiveOffer3);
+        if (i == 4) facultyProfile.AssignAsTeacher(electiveOffer4);
+        // Repeat for electiveOffer5 if needed
+}
 
         // Print total revenue for the semester
         int total = department.calculateRevenuesBySemester("Fall 2024");
@@ -91,48 +98,54 @@ public class Info5001UniversityExample {
     }
 
     public static void printReport(Department department, String semester) {
-        System.out.println("Semester Report: " + semester);
-        System.out.println("------------------------------------------------");
-        StudentDirectory studentDirectory = department.getStudentDirectory();
-        
-        for (StudentProfile student : studentDirectory.studentlist) {
-            System.out.println("Student ID: " + student.getStudentID());
-            System.out.println("Courses Registered:");
+    System.out.println("Semester Report: " + semester);
+    System.out.println("------------------------------------------------");
+    StudentDirectory studentDirectory = department.getStudentDirectory();
 
-            double totalTuition = 0;
-            double totalGradePoints = 0;
-            int totalCourses = 0;
+    for (StudentProfile student : studentDirectory.studentlist) {
+        System.out.println("Student ID: " + student.getStudentID());
+        System.out.println("Courses Registered:");
 
-            // Get the CourseLoad for the specified semester
-            CourseLoad courseLoad = student.getCourseLoadBySemester(semester);
-            if (courseLoad == null) {
-                System.out.println("No courses registered for this semester.");
-                continue;
-             }
+        double totalTuition = 0;
+        double totalGradePoints = 0;
+        int totalCourses = 0;
+
+        // Get the CourseLoad for the specified semester
+        CourseLoad courseLoad = student.getCourseLoadBySemester(semester);
+        if (courseLoad == null) {
+            System.out.println("No courses registered for this semester.");
+            continue;
+        }
 
         // Iterate through each SeatAssignment in the course load
-            for (SeatAssignment seatAssignment : courseLoad.getSeatAssignments()) {
-                double grade = seatAssignment.grade; // Accessing grade directly
-                CourseOffer courseOffer = seatAssignment.getCourseOffer();
-                Course course = courseOffer.getSubjectCourse();
-                double tuition = seatAssignment.GetCourseStudentScore(); // Assuming Course has a getTuition method
+        for (SeatAssignment seatAssignment : courseLoad.getSeatAssignments()) {
+            double grade = seatAssignment.grade; // Accessing grade directly
+            CourseOffer courseOffer = seatAssignment.getCourseOffer();
+            Course course = courseOffer.getSubjectCourse();
+            double tuition = seatAssignment.GetCourseStudentScore(); // Assuming Course has a getTuition method
 
             totalTuition += tuition;
             totalGradePoints += grade;
             totalCourses++;
 
+            // Null check for faculty assignment
+            String professorId = "N/A"; // Default if no professor assigned
+            if (courseOffer.getFacultyProfile() != null) {
+                professorId = courseOffer.getFacultyProfile().person.getPersonId();
+            }
+
             System.out.printf("- %s (Grade: %.2f, Professor: %s)\n", 
                 course.getCOurseNumber(), 
                 grade, 
-                courseOffer.getFacultyProfile().person.getPersonId());
+                professorId);
         }
 
+        double averageGPA = (totalCourses > 0) ? (totalGradePoints / totalCourses) : 0;
 
-            double averageGPA = (totalCourses > 0) ? (totalGradePoints / totalCourses) : 0;
-
-            System.out.printf("Total Tuition Paid: %.2f\n", totalTuition);
-            System.out.printf("Average GPA: %.2f\n", averageGPA);
-            System.out.println("------------------------------------------------");
-        }
+        System.out.printf("Total Tuition Paid: %.2f\n", totalTuition);
+        System.out.printf("Average GPA: %.2f\n", averageGPA);
+        System.out.println("------------------------------------------------");
     }
+}
+
 }
