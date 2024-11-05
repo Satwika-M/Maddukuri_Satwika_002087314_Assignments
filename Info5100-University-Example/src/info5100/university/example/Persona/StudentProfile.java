@@ -30,6 +30,13 @@ public class StudentProfile {
     public boolean isMatch(String id) {
         return person.getPersonId().equals(id);
     }
+    
+    //added
+
+    public Person getStudentID() {
+        return person;
+    }
+    // added
 
     public Transcript getTranscript() {
         return transcript;

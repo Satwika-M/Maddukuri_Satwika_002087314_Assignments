@@ -10,6 +10,7 @@ import info5100.university.example.CourseCatalog.CourseCatalog;
 import info5100.university.example.CourseSchedule.CourseLoad;
 import info5100.university.example.CourseSchedule.CourseOffer;
 import info5100.university.example.CourseSchedule.CourseSchedule;
+import info5100.university.example.CourseSchedule.SeatAssignment;
 import info5100.university.example.Department.Department;
 import info5100.university.example.Persona.Faculty.FacultyProfile;
 import info5100.university.example.Persona.Person;
@@ -93,6 +94,7 @@ public class Info5001UniversityExample {
         System.out.println("Semester Report: " + semester);
         System.out.println("------------------------------------------------");
         StudentDirectory studentDirectory = department.getStudentDirectory();
+        
         for (StudentProfile student : studentDirectory.studentlist) {
             System.out.println("Student ID: " + student.getStudentID());
             System.out.println("Courses Registered:");
@@ -101,19 +103,30 @@ public class Info5001UniversityExample {
             double totalGradePoints = 0;
             int totalCourses = 0;
 
-            // Assuming CourseLoad class has a method to get all registered courses
-            for (CourseOffer courseOffer : student.getCourseLoad().getCourses()) {
-                String courseId = courseOffer.getCourse().getCourseId();
-                double grade = courseOffer.getGradeForStudent(student); // Assume this method exists
-                double tuition = courseOffer.getCourse().getTuition();
+            // Get the CourseLoad for the specified semester
+            CourseLoad courseLoad = student.getCourseLoadBySemester(semester);
+            if (courseLoad == null) {
+                System.out.println("No courses registered for this semester.");
+                continue;
+             }
 
-                totalTuition += tuition;
-                totalGradePoints += grade;
-                totalCourses++;
+        // Iterate through each SeatAssignment in the course load
+            for (SeatAssignment seatAssignment : courseLoad.getSeatAssignments()) {
+                double grade = seatAssignment.grade; // Accessing grade directly
+                CourseOffer courseOffer = seatAssignment.getCourseOffer();
+                Course course = courseOffer.getSubjectCourse();
+                double tuition = seatAssignment.GetCourseStudentScore(); // Assuming Course has a getTuition method
 
-                System.out.printf("- %s (Grade: %.2f, Professor: %s)\n", 
-                    courseId, grade, courseOffer.getProfessor().getPerson().getPersonId());
-            }
+            totalTuition += tuition;
+            totalGradePoints += grade;
+            totalCourses++;
+
+            System.out.printf("- %s (Grade: %.2f, Professor: %s)\n", 
+                course.getCOurseNumber(), 
+                grade, 
+                courseOffer.getFacultyProfile().person.getPersonId());
+        }
+
 
             double averageGPA = (totalCourses > 0) ? (totalGradePoints / totalCourses) : 0;
 

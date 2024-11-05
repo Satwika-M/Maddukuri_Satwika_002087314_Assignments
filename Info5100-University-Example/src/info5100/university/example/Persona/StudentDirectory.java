@@ -15,7 +15,8 @@ import java.util.ArrayList;
 public class StudentDirectory {
 
     Department department;
-    ArrayList<StudentProfile> studentlist;
+    public ArrayList<StudentProfile> studentlist;
+    //added public @
 
     public StudentDirectory(Department d) {
 
