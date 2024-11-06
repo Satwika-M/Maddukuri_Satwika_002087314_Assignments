@@ -13,6 +13,11 @@ import info5100.university.example.CourseCatalog.Course;
  */
 public class SeatAssignment {
     public float grade; //(Letter grade mappings: A=4.0, A-=3.7, B+=3.3, B=3.0, )
+
+    public float Grade() {
+        this.grade = (float) (Math.round((3.0 + Math.random()) * 10.0) / 10.0);
+        return grade;
+    }
     //added punlic
     Seat seat;
     boolean like; //true means like and false means not like
@@ -44,8 +49,10 @@ public class SeatAssignment {
         
         return getCourseOffer().getSubjectCourse();
     }
+    
+    
     public float GetCourseStudentScore(){
-        return getCreditHours()*grade;
+        return getCreditHours()*1800;
     }
     
     

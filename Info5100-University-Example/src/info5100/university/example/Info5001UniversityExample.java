@@ -166,7 +166,7 @@ public class Info5001UniversityExample {
 
         // Iterate through each SeatAssignment in the course load
         for (SeatAssignment seatAssignment : courseLoad.getSeatAssignments()) {
-            double grade = seatAssignment.grade; // Accessing grade directly
+            double grade = seatAssignment.Grade(); 
             CourseOffer courseOffer = seatAssignment.getCourseOffer();
             Course course = courseOffer.getSubjectCourse();
             double tuition = seatAssignment.GetCourseStudentScore(); // Assuming Course has a getTuition method
