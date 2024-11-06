@@ -16,8 +16,11 @@ public class FacultyAssignment {
     CourseOffer courseoffer;
     FacultyProfile facultyprofile;
     public FacultyAssignment(FacultyProfile fp, CourseOffer co){
-        courseoffer = co;
-        facultyprofile = fp;
+        //courseoffer = co;
+        //facultyprofile = fp;
+        
+        this.facultyprofile = fp;
+        this.courseoffer = co;
     }
 
        public double getRating(){
@@ -30,6 +33,10 @@ public class FacultyAssignment {
        }
     public FacultyProfile getFacultyProfile(){
         return facultyprofile;
+    }
+    
+    public CourseOffer getCourseOffer() {
+        return courseoffer;
     }
     
 }

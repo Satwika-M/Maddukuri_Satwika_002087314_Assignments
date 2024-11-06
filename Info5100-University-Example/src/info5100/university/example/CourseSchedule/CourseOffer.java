@@ -31,7 +31,9 @@ public class CourseOffer {
     }
 
     public FacultyProfile getFacultyProfile() {
-        return facultyassignment.getFacultyProfile();
+        return (facultyassignment != null) ? facultyassignment.getFacultyProfile() : null;
+        //Added
+        //return facultyassignment.getFacultyProfile();
     }
 
     public String getCourseNumber() {

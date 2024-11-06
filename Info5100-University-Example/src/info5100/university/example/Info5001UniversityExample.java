@@ -12,11 +12,15 @@ import info5100.university.example.CourseSchedule.CourseOffer;
 import info5100.university.example.CourseSchedule.CourseSchedule;
 import info5100.university.example.CourseSchedule.SeatAssignment;
 import info5100.university.example.Department.Department;
+import info5100.university.example.Persona.Faculty.FacultyAssignment;
+import info5100.university.example.Persona.Faculty.FacultyDirectory;
 import info5100.university.example.Persona.Faculty.FacultyProfile;
 import info5100.university.example.Persona.Person;
 import info5100.university.example.Persona.PersonDirectory;
 import info5100.university.example.Persona.StudentDirectory;
 import info5100.university.example.Persona.StudentProfile;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -76,19 +80,26 @@ public class Info5001UniversityExample {
         // Create faculty profiles and assign them to courses
        
         
-        for (int i = 0; i < 5; i++) {
-        Person facultyPerson = new Person("F" + String.format("%03d", i + 1));
-        FacultyProfile facultyProfile = new FacultyProfile(facultyPerson);
+        //for (int i = 0; i < 5; i++) {
+        //Person facultyPerson = new Person("F" + String.format("%03d", i + 1));
+        //FacultyProfile facultyProfile = new FacultyProfile(facultyPerson);
 
         // Assign faculty to each course offer
-        if (i == 0) facultyProfile.AssignAsTeacher(coreOffer);
-        if (i == 1) facultyProfile.AssignAsTeacher(electiveOffer1);
-        if (i == 2) facultyProfile.AssignAsTeacher(electiveOffer2);
-        if (i == 3) facultyProfile.AssignAsTeacher(electiveOffer3);
-        if (i == 4) facultyProfile.AssignAsTeacher(electiveOffer4);
-        // Repeat for electiveOffer5 if needed
-}
-
+        //if (i == 0) facultyProfile.AssignAsTeacher(coreOffer);
+        //if (i == 1) facultyProfile.AssignAsTeacher(electiveOffer1);
+        //if (i == 2) facultyProfile.AssignAsTeacher(electiveOffer2);
+        //if (i == 3) facultyProfile.AssignAsTeacher(electiveOffer3);
+        //if (i == 4) facultyProfile.AssignAsTeacher(electiveOffer4);
+        HashMap<CourseOffer,ArrayList<FacultyAssignment>> fac_cou_map = new HashMap<>();
+        
+        PersonDirectory pd = department.getPersonDirectory();
+        Person p1 = pd.newPerson("f1");
+        FacultyDirectory fd1 = department.getFacultyDirectory();
+        FacultyProfile fp1 = fd1.newFacultyProfile(p1);
+        FacultyAssignment ff=fp1.AssignAsTeacher(coreOffer);
+        fac_cou_map.put(coreOffer,ff.getFacultyProfile().facultyassignments);
+       
+       
         // Print total revenue for the semester
         int total = department.calculateRevenuesBySemester("Fall 2024");
         System.out.println("Total Revenue for Fall 2024: " + total);

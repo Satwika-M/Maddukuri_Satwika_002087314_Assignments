@@ -31,15 +31,21 @@ public class Department {
     FacultyDirectory facultydirectory;
     EmployerDirectory employerdirectory;
     Degree degree;
+    
 
     HashMap<String, CourseSchedule> mastercoursecatalog;
 
     public Department(String n) {
         name = n;
         mastercoursecatalog = new HashMap<>();
-        coursecatalog = new CourseCatalog(this);
-        studentdirectory = new StudentDirectory(this); //pass the department object so it stays linked to it
-        persondirectory = new PersonDirectory();
+        
+        this.facultydirectory = new FacultyDirectory(this);
+        this.persondirectory = new PersonDirectory();
+        this.coursecatalog = new CourseCatalog(this);
+        this.studentdirectory = new StudentDirectory(this); // added@
+        //coursecatalog = new CourseCatalog(this);
+        //studentdirectory = new StudentDirectory(this); //pass the department object so it stays linked to it
+        //persondirectory = new PersonDirectory();
         degree = new Degree("MSIS");
         
     }
@@ -106,5 +112,13 @@ public void addElectiveCourse(Course c){
 
         co.assignEmptySeat(cl);
 
+    }
+    
+    public FacultyDirectory getFacultyDirectory() {
+        return facultydirectory;
+    }
+
+    public void setFacultyDirectory(FacultyDirectory facultydirectory) {
+        this.facultydirectory = facultydirectory;
     }
 }

@@ -17,7 +17,7 @@ public class FacultyProfile {
 
     public Person person;
     //added public @
-    ArrayList <FacultyAssignment> facultyassignments; 
+    public ArrayList <FacultyAssignment> facultyassignments; // added public
     
     public FacultyProfile(Person p) {
 
