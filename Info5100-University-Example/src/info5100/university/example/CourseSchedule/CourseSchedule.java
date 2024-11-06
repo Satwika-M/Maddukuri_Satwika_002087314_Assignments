@@ -7,6 +7,7 @@ package info5100.university.example.CourseSchedule;
 
 import info5100.university.example.CourseCatalog.Course;
 import info5100.university.example.CourseCatalog.CourseCatalog;
+import info5100.university.example.Persona.Faculty.FacultyProfile;
 import java.util.ArrayList;
 
 /**
@@ -27,12 +28,12 @@ public class CourseSchedule {
 
     }
 
-    public CourseOffer newCourseOffer(String  n) {
+    public CourseOffer newCourseOffer(String  n, FacultyProfile f) {
 
         Course c = coursecatalog.getCourseByNumber(n);
         if(c==null) return null;
         CourseOffer co;
-        co = new CourseOffer(c);
+        co = new CourseOffer(c, f);
         schedule.add(co);
         return co;
     }

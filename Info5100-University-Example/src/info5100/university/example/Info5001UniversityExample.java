@@ -32,7 +32,17 @@ public class Info5001UniversityExample {
         // Initialize department and course catalog
         Department department = new Department("Information Systems");
         CourseCatalog courseCatalog = department.getCourseCatalog();
+        
+        FacultyDirectory facultyDirectory = department.getFacultyDirectory();
 
+        // First create faculty members
+        FacultyProfile coreFaculty = facultyDirectory.newFacultyProfile(new Person("F001"));
+        FacultyProfile electiveFaculty1 = facultyDirectory.newFacultyProfile(new Person("F002"));
+        FacultyProfile electiveFaculty2 = facultyDirectory.newFacultyProfile(new Person("F003"));
+        FacultyProfile electiveFaculty3 = facultyDirectory.newFacultyProfile(new Person("F004"));
+        FacultyProfile electiveFaculty4 = facultyDirectory.newFacultyProfile(new Person("F005"));
+        FacultyProfile electiveFaculty5 = facultyDirectory.newFacultyProfile(new Person("F006"));
+        
         // Create courses (1 core and 5 electives)
         Course coreCourse = courseCatalog.newCourse("Application Engineering", "INFO 5100", 4);
         Course elective1 = courseCatalog.newCourse("Database Systems", "INFO 5200", 3);
@@ -45,12 +55,12 @@ public class Info5001UniversityExample {
         CourseSchedule courseSchedule = department.newCourseSchedule("Fall 2024");
         
         // Create course offers for each course
-        CourseOffer coreOffer = courseSchedule.newCourseOffer("INFO 5100");
-        CourseOffer electiveOffer1 = courseSchedule.newCourseOffer("INFO 5200");
-        CourseOffer electiveOffer2 = courseSchedule.newCourseOffer("INFO 5300");
-        CourseOffer electiveOffer3 = courseSchedule.newCourseOffer("INFO 5400");
-        CourseOffer electiveOffer4 = courseSchedule.newCourseOffer("INFO 5500");
-        CourseOffer electiveOffer5 = courseSchedule.newCourseOffer("INFO 5600");
+        CourseOffer coreOffer = courseSchedule.newCourseOffer("INFO 5100", coreFaculty);
+        CourseOffer electiveOffer1 = courseSchedule.newCourseOffer("INFO 5200", electiveFaculty1);
+        CourseOffer electiveOffer2 = courseSchedule.newCourseOffer("INFO 5300", electiveFaculty2);
+        CourseOffer electiveOffer3 = courseSchedule.newCourseOffer("INFO 5400", electiveFaculty3);
+        CourseOffer electiveOffer4 = courseSchedule.newCourseOffer("INFO 5500", electiveFaculty4);
+        CourseOffer electiveOffer5 = courseSchedule.newCourseOffer("INFO 5600", electiveFaculty5);
 
         // Generate seats for the course offers
         coreOffer.generatSeats(20);
@@ -90,16 +100,41 @@ public class Info5001UniversityExample {
         //if (i == 2) facultyProfile.AssignAsTeacher(electiveOffer2);
         //if (i == 3) facultyProfile.AssignAsTeacher(electiveOffer3);
         //if (i == 4) facultyProfile.AssignAsTeacher(electiveOffer4);
-        HashMap<CourseOffer,ArrayList<FacultyAssignment>> fac_cou_map = new HashMap<>();
+        //HashMap<CourseOffer,ArrayList<FacultyAssignment>> fac_cou_map = new HashMap<>();
         
-        PersonDirectory pd = department.getPersonDirectory();
-        Person p1 = pd.newPerson("f1");
-        FacultyDirectory fd1 = department.getFacultyDirectory();
-        FacultyProfile fp1 = fd1.newFacultyProfile(p1);
-        FacultyAssignment ff=fp1.AssignAsTeacher(coreOffer);
-        fac_cou_map.put(coreOffer,ff.getFacultyProfile().facultyassignments);
+        //PersonDirectory pd = department.getPersonDirectory();
+        //Person p1 = pd.newPerson("f1");
+        //FacultyDirectory fd1 = department.getFacultyDirectory();
+        //FacultyProfile fp1 = fd1.newFacultyProfile(p1);
+        //FacultyAssignment ff=fp1.AssignAsTeacher(coreOffer);
+        //fac_cou_map.put(coreOffer,ff.getFacultyProfile().facultyassignments);
        
-       
+       // Create faculty profiles and assign them to courses
+        //FacultyDirectory facultyDirectory = department.getFacultyDirectory();
+        
+        // Assign faculty to each course offer
+        // Ensure every course gets a faculty member
+        //FacultyProfile coreFaculty = facultyDirectory.newFacultyProfile(new Person("F001"));
+        //coreFaculty.AssignAsTeacher(coreOffer);
+
+        //FacultyProfile electiveFaculty1 = facultyDirectory.newFacultyProfile(new Person("F002"));
+        //electiveFaculty1.AssignAsTeacher(electiveOffer1);
+
+        //FacultyProfile electiveFaculty2 = facultyDirectory.newFacultyProfile(new Person("F003"));
+        //electiveFaculty2.AssignAsTeacher(electiveOffer2);
+
+        //FacultyProfile electiveFaculty3 = facultyDirectory.newFacultyProfile(new Person("F004"));
+        //electiveFaculty3.AssignAsTeacher(electiveOffer3);
+
+        //FacultyProfile electiveFaculty4 = facultyDirectory.newFacultyProfile(new Person("F005"));
+        //electiveFaculty4.AssignAsTeacher(electiveOffer4);
+
+        //FacultyProfile electiveFaculty5 = facultyDirectory.newFacultyProfile(new Person("F006"));
+        //electiveFaculty5.AssignAsTeacher(electiveOffer5);
+        
+        
+        
+        
         // Print total revenue for the semester
         int total = department.calculateRevenuesBySemester("Fall 2024");
         System.out.println("Total Revenue for Fall 2024: " + total);
@@ -127,6 +162,7 @@ public class Info5001UniversityExample {
             System.out.println("No courses registered for this semester.");
             continue;
         }
+    
 
         // Iterate through each SeatAssignment in the course load
         for (SeatAssignment seatAssignment : courseLoad.getSeatAssignments()) {
@@ -138,18 +174,25 @@ public class Info5001UniversityExample {
             totalTuition += tuition;
             totalGradePoints += grade;
             totalCourses++;
-
-            // Null check for faculty assignment
-            String professorId = "N/A"; // Default if no professor assigned
-            if (courseOffer.getFacultyProfile() != null) {
-                professorId = courseOffer.getFacultyProfile().person.getPersonId();
-            }
+            
+            String professorId = courseOffer.getFacultyProfile().person.getPersonId();
 
             System.out.printf("- %s (Grade: %.2f, Professor: %s)\n", 
                 course.getCOurseNumber(), 
                 grade, 
                 professorId);
-        }
+
+            // Null check for faculty assignment
+            //String professorId = "N/A"; // Default if no professor assigned
+            //if (courseOffer.getFacultyProfile() != null) {
+               // professorId = courseOffer.getFacultyProfile().person.getPersonId();
+            }
+
+            //System.out.printf("- %s (Grade: %.2f, Professor: %s)\n", 
+                //course.getCOurseNumber(), 
+                //grade, 
+                //professorId);
+        
 
         double averageGPA = (totalCourses > 0) ? (totalGradePoints / totalCourses) : 0;
 

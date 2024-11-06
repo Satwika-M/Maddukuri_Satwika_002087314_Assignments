@@ -20,9 +20,10 @@ public class CourseOffer {
     ArrayList<Seat> seatlist;
     FacultyAssignment facultyassignment;
 
-    public CourseOffer(Course c) {
+    public CourseOffer(Course c,  FacultyProfile f) {
         course = c;
-        seatlist = new ArrayList();
+        seatlist = new ArrayList<>();
+        facultyassignment = new FacultyAssignment(f, this);
     }
      
     public void AssignAsTeacher(FacultyProfile fp) {

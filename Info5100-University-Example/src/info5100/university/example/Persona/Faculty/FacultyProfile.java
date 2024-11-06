@@ -46,6 +46,7 @@ public class FacultyProfile {
         facultyassignments.add(fa);
         
         return fa;
+        
     }
     
     public FacultyProfile getCourseOffer(String courseid){
