@@ -50,9 +50,18 @@ public class Info5001UniversityExample {
         Course elective3 = courseCatalog.newCourse("Machine Learning", "INFO 5400", 3);
         Course elective4 = courseCatalog.newCourse("Network Security", "INFO 5500", 3);
         Course elective5 = courseCatalog.newCourse("Cloud Computing", "INFO 5600", 3);
+        
+        System.out.println( coreCourse + "  credits 4");
+        System.out.println( elective1 + "  credits 3");
+        System.out.println( elective2 + "  credits 3");
+        System.out.println( elective3 + " credits 3");
+        System.out.println( elective4 + "  credits 3");
+        System.out.println( elective5 + "  credits 3");
+        
 
         // Create course schedule for the semester
         CourseSchedule courseSchedule = department.newCourseSchedule("Fall 2024");
+        System.out.println("Department: MSIS" );
         
         // Create course offers for each course
         CourseOffer coreOffer = courseSchedule.newCourseOffer("INFO 5100", coreFaculty);
@@ -86,8 +95,6 @@ public class Info5001UniversityExample {
             if (i % 5 == 0) courseLoad.newSeatAssignment(electiveOffer4); // Multiple of 5 in elective 4
             if (i % 6 == 0) courseLoad.newSeatAssignment(electiveOffer5); // Multiple of 6 in elective 5
         }
-
-        // Create faculty profiles and assign them to courses
        
         
         //for (int i = 0; i < 5; i++) {
@@ -109,7 +116,7 @@ public class Info5001UniversityExample {
         //FacultyAssignment ff=fp1.AssignAsTeacher(coreOffer);
         //fac_cou_map.put(coreOffer,ff.getFacultyProfile().facultyassignments);
        
-       // Create faculty profiles and assign them to courses
+       
         //FacultyDirectory facultyDirectory = department.getFacultyDirectory();
         
         // Assign faculty to each course offer

@@ -15,7 +15,10 @@ public class SeatAssignment {
     public float grade; //(Letter grade mappings: A=4.0, A-=3.7, B+=3.3, B=3.0, )
 
     public float Grade() {
-        this.grade = (float) (Math.round((3.0 + Math.random()) * 10.0) / 10.0);
+        int max = 4;
+        int min = 1;
+        int range = max - min + 1;
+        this.grade = (float) (Math.round((Math.random()) *range * 10.0) / 10.0);
         return grade;
     }
     //added punlic
